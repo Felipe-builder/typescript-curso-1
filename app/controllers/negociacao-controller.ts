@@ -22,7 +22,12 @@ export class NegociacaoController {
 
 
   public adiciona(): void {
-    const negociacao: Negociacao = this.criaNegociacao();
+    const negociacaoTemp = new Negociacao(null, 0, 0);
+    const negociacao: Negociacao = negociacaoTemp.criaDe(
+      this.inputData.value,
+      this.inputQuantidade.value,
+      this.inputValor.value
+    );
     if (!this.eDiaUtil(negociacao.data)) {
       this.mensagemView
         .update("Somente fazemos negociações em dias úteis. Obrigado");
@@ -36,14 +41,6 @@ export class NegociacaoController {
 
   private eDiaUtil(date: Date) {
     return date.getDay() > DiasDaSemana.DOMINGO && date.getDay() < DiasDaSemana.SABADO;
-  }
-
-  private criaNegociacao(): Negociacao {
-    const exp = /-/g;
-    const date = new Date(this.inputData.value.replace(exp, ','));
-    const quantidade = parseInt(this.inputQuantidade.value);
-    const valor = parseFloat(this.inputValor.value);
-    return new Negociacao(date, quantidade, valor);
   }
 
   private limparFormulario(): void {
