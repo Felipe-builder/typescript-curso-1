@@ -14,8 +14,7 @@ export class NegociacaoController {
         this.negocicacoesView.update(this.negociacoes);
     }
     adiciona() {
-        const negociacaoTemp = new Negociacao(null, 0, 0);
-        const negociacao = negociacaoTemp.criaDe(this.inputData.value, this.inputQuantidade.value, this.inputValor.value);
+        const negociacao = Negociacao.criaDe(this.inputData.value, this.inputQuantidade.value, this.inputValor.value);
         if (!this.eDiaUtil(negociacao.data)) {
             this.mensagemView
                 .update("Somente fazemos negociações em dias úteis. Obrigado");
